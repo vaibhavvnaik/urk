@@ -1,4 +1,5 @@
 import { Nunito } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/react';
 
 import Navbar from '@/app/components/navbar/Navbar';
 import LoginModal from '@/app/components/modals/LoginModal';
@@ -39,6 +40,7 @@ export default async function RootLayout({
           <RentModal />
           <Navbar currentUser={currentUser} />
         </ClientOnly>
+        <Analytics />
         <div className="pb-20 pt-28">
           {children}
         </div>
