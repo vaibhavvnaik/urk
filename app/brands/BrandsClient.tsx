@@ -90,7 +90,7 @@ const BrandsClient: React.FC<BrandsClientProps> = ({
   };
    return (
     <Container>
-      <Heading title="Brands" />
+      <Heading title="Brands"/>
       <form onSubmit={createBrand}>
         <input
           type="text"
