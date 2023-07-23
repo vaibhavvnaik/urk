@@ -11,21 +11,11 @@ import useCountries from '@/app/hooks/useCountries';
 const Search = () => {
   const searchModal = useSearchModal();
   const params = useSearchParams();
-  const { getByValue } = useCountries();
-
-  const  locationValue = params?.get('locationValue'); 
-  const  startDate = params?.get('startDate');
-  const  endDate = params?.get('endDate');
-  const  guestCount = params?.get('guestCount');
-
-  const locationLabel = useMemo(() => {
-    if (locationValue) {
-      return getByValue(locationValue as string)?.label;
-    }
-
-    return 'Anywhere';
-  }, [locationValue, getByValue]);
-
+  const  startDate = params?.get('startDate')|| new Date();
+  const  endDate = params?.get('endDate')|| new Date();;
+  const  options = { day: 'numeric', month: 'long', year: 'numeric' };
+  //The data of the component (its state & props) will update in response to user events such as clicking, typing, etc. 
+  //This results in the re-rendering of the component.
   const durationLabel = useMemo(() => {
     if (startDate && endDate) {
       const start = new Date(startDate as string);
@@ -38,17 +28,8 @@ const Search = () => {
 
       return `${diff} Days`;
     }
-
     return 'Any Week'
   }, [startDate, endDate]);
-
-  const guestLabel = useMemo(() => {
-    if (guestCount) {
-      return `${guestCount} Guests`;
-    }
-
-    return 'Add Guests';
-  }, [guestCount]);
 
   return ( 
     <div
@@ -75,15 +56,6 @@ const Search = () => {
       >
         <div 
           className="
-            text-sm 
-            font-semibold 
-            px-6
-          "
-        >
-          {locationLabel}
-        </div>
-        <div 
-          className="
             hidden 
             sm:block 
             text-sm 
@@ -94,7 +66,7 @@ const Search = () => {
             text-center
           "
         >
-          {durationLabel}
+          {new Date(startDate).toLocaleDateString('en-US', {day: 'numeric', month: 'long'})} to {new Date(endDate).toLocaleDateString('en-US', options)} ({durationLabel})
         </div>
         <div 
           className="
@@ -108,10 +80,9 @@ const Search = () => {
             gap-3
           "
         >
-          <div className="hidden sm:block">{guestLabel}</div>
           <div 
             className="
-              p-2 
+              p-1 
               bg-rose-500 
               rounded-full 
               text-white
@@ -122,7 +93,7 @@ const Search = () => {
         </div>
       </div>
     </div>
-  );
+  )
 }
  
 export default Search;

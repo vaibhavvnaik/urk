@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -21,12 +21,13 @@ const UserMenu: React.FC<UserMenuProps> = ({
   currentUser
 }) => {
   const router = useRouter();
-
+  const email = process.env.EMAIL;
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
   const rentModal = useRentModal();
 
   const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
@@ -40,26 +41,29 @@ const UserMenu: React.FC<UserMenuProps> = ({
     rentModal.onOpen();
   }, [loginModal, rentModal, currentUser]);
 
+  const handleClickOutside = useCallback(
+    (event: MouseEvent) => {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+      console.log("Inside handleClickOutside");
+    },
+    []
+  );
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [handleClickOutside]);
+
   return ( 
-    <div className="relative">
+    <div className="relative" ref={menuRef}>
       <div className="flex flex-row items-center gap-3">
-        <div 
-          onClick={onRent}
-          className="
-            hidden
-            md:block
-            text-sm 
-            font-semibold 
-            py-3 
-            px-4 
-            rounded-full 
-            hover:bg-neutral-100 
-            transition 
-            cursor-pointer
-          "
-        >
-          Airbnb your home
-        </div>
         <div 
         onClick={toggleOpen}
         className="
@@ -85,43 +89,40 @@ const UserMenu: React.FC<UserMenuProps> = ({
         </div>
       </div>
       {isOpen && (
-        <div 
+        <div
           className="
-            absolute 
-            rounded-xl 
-            shadow-md
-            w-[40vw]
-            md:w-3/4 
-            bg-white 
-            overflow-hidden 
-            right-0 
-            top-12 
-            text-sm
+          absolute 
+          rounded-xl 
+          shadow-md
+          w-full
+          md:w-full 
+          bg-white 
+          overflow-hidden 
+          top-12 
+          text-sm
           "
         >
           <div className="flex flex-col cursor-pointer">
             {currentUser ? (
               <>
                 <MenuItem 
-                  label="My trips" 
-                  onClick={() => router.push('/trips')}
-                />
-                <MenuItem 
                   label="My favorites" 
                   onClick={() => router.push('/favorites')}
                 />
                 <MenuItem 
-                  label="My reservations" 
-                  onClick={() => router.push('/reservations')}
+                  label="About Us" 
+                  onClick={() => router.push('/aboutus')}
                 />
+                {currentUser.email === email?(
                 <MenuItem 
-                  label="My properties" 
-                  onClick={() => router.push('/properties')}
-                />
+                  label="My categories" 
+                  onClick={() => router.push('/categories')}
+                />):(<></>)}
+                {currentUser.email === email?(
                 <MenuItem 
-                  label="Airbnb your home" 
-                  onClick={rentModal.onOpen}
-                />
+                  label="My brands" 
+                  onClick={() => router.push('/brands')}
+                />):(<></>)}
                 <hr />
                 <MenuItem 
                   label="Logout" 
@@ -137,6 +138,10 @@ const UserMenu: React.FC<UserMenuProps> = ({
                 <MenuItem 
                   label="Sign up" 
                   onClick={registerModal.onOpen}
+                />
+                <MenuItem 
+                  label="About Us" 
+                  onClick={() => router.push('/aboutus')}
                 />
               </>
             )}

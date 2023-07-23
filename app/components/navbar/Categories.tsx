@@ -1,100 +1,105 @@
 'use client';
 
 import { usePathname, useSearchParams } from 'next/navigation';
-import { TbBeach, TbMountain, TbPool } from 'react-icons/tb';
+import { TbBabyCarriage, TbBeach, TbLuggage, TbMountain, TbPool, TbShoe } from 'react-icons/tb';
 import { 
   GiBarn, 
   GiBoatFishing, 
   GiCactus, 
   GiCastle, 
   GiCaveEntrance, 
+  GiClothes, 
   GiForestCamp, 
+  GiHollowCat, 
   GiIsland,
   GiWindmill
 } from 'react-icons/gi';
 import { FaSkiing } from 'react-icons/fa';
 import { BsSnow } from 'react-icons/bs';
-import { IoDiamond } from 'react-icons/io5';
-import { MdOutlineVilla } from 'react-icons/md';
+import { IoDiamond, IoDiamondOutline, IoFitnessOutline, IoGameControllerOutline, IoHardwareChipOutline, IoRestaurantOutline } from 'react-icons/io5';
+import { MdOutlineLocalGroceryStore, MdOutlineSportsFootball, MdOutlineVilla, MdTravelExplore } from 'react-icons/md';
 
 import CategoryBox from "../CategoryBox";
 import Container from '../Container';
+import { FcElectronics } from 'react-icons/fc';
+import { AiOutlineCar, AiOutlineHome } from 'react-icons/ai';
+import { BiCameraMovie } from 'react-icons/bi';
 
 
 export const categories = [
   {
-    label: 'Beach',
-    icon: TbBeach,
+    label: 'Grocery',
+    icon: MdOutlineLocalGroceryStore,
     description: 'This property is close to the beach!',
   },
   {
-    label: 'Windmills',
-    icon: GiWindmill,
+    label: 'Footwear',
+    icon: TbShoe,
     description: 'This property is has windmills!',
   },
   {
-    label: 'Modern',
-    icon: MdOutlineVilla,
+    label: 'Home',
+    icon: AiOutlineHome,
     description: 'This property is modern!'
   },
   {
-    label: 'Countryside',
-    icon: TbMountain,
+    label: 'Clothing',
+    icon: GiClothes,
     description: 'This property is in the countryside!'
   },
   {
-    label: 'Pools',
-    icon: TbPool,
+    label: 'Auto',
+    icon: AiOutlineCar,
     description: 'This is property has a beautiful pool!'
   },
   {
-    label: 'Islands',
-    icon: GiIsland,
+    label: 'Health & Beauty',
+    icon: IoFitnessOutline,
     description: 'This property is on an island!'
   },
   {
-    label: 'Lake',
-    icon: GiBoatFishing,
+    label: 'Entertainment',
+    icon: BiCameraMovie,
     description: 'This property is near a lake!'
   },
   {
-    label: 'Skiing',
-    icon: FaSkiing,
+    label: 'Travel',
+    icon: MdTravelExplore,
     description: 'This property has skiing activies!'
   },
   {
-    label: 'Castles',
-    icon: GiCastle,
+    label: 'Babies & Kids',
+    icon: TbBabyCarriage,
     description: 'This property is an ancient castle!'
   },
   {
-    label: 'Caves',
-    icon: GiCaveEntrance,
+    label: 'Sporting Goods',
+    icon: MdOutlineSportsFootball,
     description: 'This property is in a spooky cave!'
   },
   {
-    label: 'Camping',
-    icon: GiForestCamp,
+    label: 'Pets',
+    icon: GiHollowCat,
     description: 'This property offers camping activities!'
   },
   {
-    label: 'Arctic',
-    icon: BsSnow,
+    label: 'Luggage',
+    icon: TbLuggage,
     description: 'This property is in arctic environment!'
   },
   {
-    label: 'Desert',
-    icon: GiCactus,
+    label: 'Restaurants',
+    icon: IoRestaurantOutline,
     description: 'This property is in the desert!'
   },
   {
-    label: 'Barns',
-    icon: GiBarn,
+    label: 'Electronics',
+    icon: IoHardwareChipOutline,
     description: 'This property is in a barn!'
   },
   {
     label: 'Lux',
-    icon: IoDiamond,
+    icon: IoDiamondOutline,
     description: 'This property is brand new and luxurious!'
   }
 ]
@@ -113,7 +118,7 @@ const Categories = () => {
     <Container>
       <div
         className="
-          pt-4
+          pt-2
           flex 
           flex-row 
           items-center 

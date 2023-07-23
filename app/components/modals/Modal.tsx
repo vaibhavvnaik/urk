@@ -156,7 +156,7 @@ const Modal: React.FC<ModalProps> = ({
               </div>
               {/*footer*/}
               <div className="flex flex-col gap-2 p-6">
-                <div 
+              <div 
                   className="
                     flex 
                     flex-row 
@@ -165,19 +165,12 @@ const Modal: React.FC<ModalProps> = ({
                     w-full
                   "
                 >
-                  {secondaryAction && secondaryActionLabel && (
-                    <Button 
-                      disabled={disabled} 
-                      label={secondaryActionLabel} 
-                      onClick={handleSecondaryAction}
-                      outline
-                    />  
-                  )}
+                {title === 'Login'?(
                   <Button 
                     disabled={disabled} 
                     label={actionLabel} 
                     onClick={handleSubmit}
-                  />
+                  />):(<></>)}
                 </div>
                 {footer}
               </div>

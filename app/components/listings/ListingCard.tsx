@@ -4,6 +4,9 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { format } from 'date-fns';
+import React, { useEffect, useState } from 'react';
+import htmlToImage, { toPng } from 'html-to-image';
+
 
 import useCountries from "@/app/hooks/useCountries";
 import { 
@@ -15,6 +18,7 @@ import {
 import HeartButton from "../HeartButton";
 import Button from "../Button";
 import ClientOnly from "../ClientOnly";
+import getBrandById from "@/app/actions/getBrandById";
 
 interface ListingCardProps {
   data: SafeListing;
@@ -25,6 +29,7 @@ interface ListingCardProps {
   actionId?: string;
   currentUser?: SafeUser | null
 };
+
 
 const ListingCard: React.FC<ListingCardProps> = ({
   data,
@@ -38,7 +43,24 @@ const ListingCard: React.FC<ListingCardProps> = ({
   const router = useRouter();
   const { getByValue } = useCountries();
 
-  const location = getByValue(data.locationValue);
+  const [previewImage, setPreviewImage] = useState<string>('');
+
+  const addClassNameToFirstElement = (htmlContent:any, className:string) => {
+    console.log("Inside Add ClassName:", className);
+    const tempElement = document.createElement('div');
+    tempElement.innerHTML = htmlContent;
+  
+    // Get the first child node
+    const firstChild = tempElement.firstChild;
+  
+    // Check if the first child is an element node
+    if (firstChild instanceof Element) {
+      // Add the classname to the first element
+      firstChild.classList.add(className);
+    }
+  
+    return tempElement.innerHTML;
+  };
 
   const handleCancel = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -51,24 +73,8 @@ const ListingCard: React.FC<ListingCardProps> = ({
     onAction?.(actionId)
   }, [disabled, onAction, actionId]);
 
-  const price = useMemo(() => {
-    if (reservation) {
-      return reservation.totalPrice;
-    }
-
-    return data.price;
-  }, [reservation, data.price]);
-
-  const reservationDate = useMemo(() => {
-    if (!reservation) {
-      return null;
-    }
-  
-    const start = new Date(reservation.startDate);
-    const end = new Date(reservation.endDate);
-
-    return `${format(start, 'PP')} - ${format(end, 'PP')}`;
-  }, [reservation]);
+  const updatedHtmlContent = addClassNameToFirstElement(data.content, 'my-class');
+  console.log("UpdatedHTML", updatedHtmlContent);
 
   return (
     <div 
@@ -78,25 +84,25 @@ const ListingCard: React.FC<ListingCardProps> = ({
       <div className="flex flex-col gap-2 w-full">
         <div 
           className="
-            aspect-square 
+            aspect-[2/3]
             w-full 
             relative 
             overflow-hidden 
             rounded-xl
           "
         >
-          <Image
-            fill
-            className="
-              object-cover 
-              h-full 
-              w-full 
-              group-hover:scale-110 
-              transition
-            "
-            src={data.imageSrc}
-            alt="Listing"
-          />
+            <Image
+              fill
+              className="
+                object-cover 
+                h-full 
+                w-full 
+                group-hover:scale-110 
+                transition
+              "
+              src={`https://urklist.s3.us-east-005.backblazeb2.com/${data.id}.png`}
+              alt="Listing"
+            />
           <div className="
             absolute
             top-3
@@ -108,19 +114,19 @@ const ListingCard: React.FC<ListingCardProps> = ({
             />
           </div>
         </div>
-        <div className="font-semibold text-lg">
-          {location?.region}, {location?.label}
+        <div className="font-semibold text-base">
+          {data.title}
+        </div>
+        <div className="font-light text-neutral-500 text-sm">
+          {new Date(data.createdAt).toLocaleString('en-US', {
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+          })}
         </div>
         <div className="font-light text-neutral-500">
-          {reservationDate || data.category}
-        </div>
-        <div className="flex flex-row items-center gap-1">
-          <div className="font-semibold">
-            $ {price}
-          </div>
-          {!reservation && (
-            <div className="font-light">night</div>
-          )}
         </div>
         {onAction && actionLabel && (
           <Button

@@ -3,48 +3,44 @@
 import Image from "next/image";
 
 import useCountries from "@/app/hooks/useCountries";
-import { SafeUser } from "@/app/types";
+import { SafeBrand, SafeUser } from "@/app/types";
 
 import Heading from "../Heading";
 import HeartButton from "../HeartButton";
+import BrandCard from "../brands/BrandCard";
 
 interface ListingHeadProps {
   title: string;
-  locationValue: string;
-  imageSrc: string;
+  createdAt: string;
+  content: string;
   id: string;
-  currentUser?: SafeUser | null
+  currentUser?: SafeUser | null;
 }
 
 const ListingHead: React.FC<ListingHeadProps> = ({
   title,
-  locationValue,
-  imageSrc,
+  createdAt,
+  content,
   id,
-  currentUser
+  currentUser,
 }) => {
-  const { getByValue } = useCountries();
-
-  const location = getByValue(locationValue);
-
   return ( 
     <>
       <Heading
         title={title}
-        subtitle={`${location?.region}, ${location?.label}`}
+        subtitle={createdAt}
       />
       <div className="
           w-full
-          h-[60vh]
+          min-h-[60vh]
           overflow-hidden 
           rounded-xl
           relative
         "
       >
-        <Image
-          src={imageSrc}
-          fill
-          className="object-cover w-full"
+        <div
+          dangerouslySetInnerHTML={{ __html: content }}
+          className="w-full"
           alt="Image"
         />
         <div
