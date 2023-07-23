@@ -29,7 +29,7 @@ const AboutUsPage = async () => {
             "
           >
             <div>
-            <a href="/terms">Terms and Conditions</a>
+            <a href="/term.html">Terms and Conditions</a>
             </div>
             <div>
             <a href="/privacy">Privacy Policy</a>

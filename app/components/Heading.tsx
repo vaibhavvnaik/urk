@@ -1,8 +1,5 @@
 'use client';
 
-import Avatar from "./Avatar";
-import Logo from "./navbar/Logo";
-
 interface HeadingProps {
   title: string;
   subtitle?: string;

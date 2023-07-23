@@ -1,8 +1,10 @@
 import React from "react";
+import Image from "next/image";
+
  const AdCard: React.FC = () => {
   return (
     <div className="max-w-sm rounded overflow-hidden">
-      <img
+      <Image
         className="w-full"
         src="/images/logo.png"
         alt="Sunset in the mountains"
