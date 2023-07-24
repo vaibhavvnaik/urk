@@ -5,7 +5,6 @@ import ClientOnly from "@/app/components/ClientOnly";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import getFavoriteListings from "@/app/actions/getFavoriteListings";
 
-import FavoritesClient from "./FavoritesClient";
 import Container from "../components/Container";
 
 const AboutUsPage = async () => {
@@ -29,10 +28,10 @@ const AboutUsPage = async () => {
             "
           >
             <div>
-            <a href="/term.html">Terms and Conditions</a>
+            <a href="/terms.html">Terms and Conditions</a>
             </div>
             <div>
-            <a href="/privacy">Privacy Policy</a>
+            <a href="/privacy.html">Privacy Policy</a>
             </div>
             <div>
             <a href="/privacy">Cookies</a>

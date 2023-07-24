@@ -66,7 +66,7 @@ const Search = () => {
             text-center
           "
         >
-          {new Date(startDate).toLocaleDateString('en-US', {day: 'numeric', month: 'long'})} to {new Date(endDate).toLocaleDateString('en-US', options)} ({durationLabel})
+          {new Date(startDate).toLocaleDateString('en-US', {day: 'numeric', month: 'long'})} to {new Date(endDate).toLocaleDateString('en-US', {day: 'numeric', month: 'long', year: 'numeric'})} ({durationLabel})
         </div>
         <div 
           className="

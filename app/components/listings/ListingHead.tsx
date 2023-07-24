@@ -1,13 +1,12 @@
 'use client';
 
 import Image from "next/image";
-
+import DOMPurify from 'dompurify'
 import useCountries from "@/app/hooks/useCountries";
 import { SafeBrand, SafeUser } from "@/app/types";
 
 import Heading from "../Heading";
 import HeartButton from "../HeartButton";
-import BrandCard from "../brands/BrandCard";
 
 interface ListingHeadProps {
   title: string;
@@ -39,9 +38,8 @@ const ListingHead: React.FC<ListingHeadProps> = ({
         "
       >
         <div
-          dangerouslySetInnerHTML={{ __html: content }}
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
           className="w-full"
-          alt="Image"
         />
         <div
           className="

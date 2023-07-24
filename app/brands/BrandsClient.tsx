@@ -148,8 +148,7 @@ const BrandsClient: React.FC<BrandsClientProps> = ({
       </thead>
       <tbody>
       {brands.map((brand) => (
-        <tr>
-        <div key={brand.id}>
+        <tr key={brand.id}>
           <td><h2>{brand.name}</h2></td>
           <td><p>{brand.description}</p></td>
           <td><button onClick={() => updateBrand(brand.id)}>
@@ -158,7 +157,6 @@ const BrandsClient: React.FC<BrandsClientProps> = ({
           <td><button onClick={() => deleteBrand(brand.id)}>
             Delete
           </button></td>
-        </div>
         </tr>
       ))}</tbody></table>
     </Container>
