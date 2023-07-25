@@ -15,6 +15,7 @@ export async function POST(
   const body = await request.json();
   const {
     title,
+    slugifyTitle,
     brandEmail,
     createdAt,
     content,
@@ -31,6 +32,7 @@ export async function POST(
   const listing = await prisma.listing.create({
     data: {
       title,
+      slugifyTitle,
       brandEmail,
       createdAt,
       content,

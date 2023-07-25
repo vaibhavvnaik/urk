@@ -49,10 +49,10 @@ import Heading from '../Heading';
       onSubmit={onSearch}
       onClose={searchModal.onClose}
       body={(
-        <div className="flex flex-col gap-8">
+        <div className="justify-center items-center flex flex-col gap-8">
           <Heading
-            title="What dates newsletter you want?"
-            subtitle="Make sure you grab your deal!"
+            title="Stay in the loop! Choose your newsletter dates!"
+            subtitle="Don't miss out! Grab your deal today!"
           />
           <Calendar
             onChange={(value) => setDateRange(value.selection)}

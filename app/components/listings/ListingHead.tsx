@@ -7,6 +7,10 @@ import { SafeBrand, SafeUser } from "@/app/types";
 
 import Heading from "../Heading";
 import HeartButton from "../HeartButton";
+import ClientOnly from "../ClientOnly";
+import Container from "../Container";
+import Avatar from "../Avatar";
+import he from 'he';
 
 interface ListingHeadProps {
   title: string;
@@ -31,16 +35,11 @@ const ListingHead: React.FC<ListingHeadProps> = ({
       />
       <div className="
           w-full
-          min-h-[60vh]
-          overflow-hidden 
+          h-[60vh]
           rounded-xl
           relative
         "
       >
-        <div
-          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
-          className="w-full"
-        />
         <div
           className="
             absolute
@@ -48,6 +47,9 @@ const ListingHead: React.FC<ListingHeadProps> = ({
             right-5
           "
         >
+          <div
+            dangerouslySetInnerHTML={{ __html: content }}
+          />
           <HeartButton 
             listingId={id}
             currentUser={currentUser}
@@ -57,5 +59,4 @@ const ListingHead: React.FC<ListingHeadProps> = ({
     </>
    );
 }
- 
 export default ListingHead;

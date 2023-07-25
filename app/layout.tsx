@@ -14,8 +14,8 @@ import ClientOnly from './components/ClientOnly';
 import getCurrentUser from './actions/getCurrentUser';
 
 export const metadata = {
-  title: 'Ork',
-  description: 'Your newsletterman at your service',
+  title: 'Urklist.com',
+  description: 'Find the deals and get inspired from newsletter',
 }
 
 const font = Nunito({ 

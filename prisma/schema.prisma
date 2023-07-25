@@ -46,11 +46,12 @@ model Account {
 }
 
 model Listing {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  title      String //subjectline string
-  brandEmail String
-  createdAt  DateTime @default(now()) //newsletter creation date when it came in the mailbox
-  content    String
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  title        String //subjectline string
+  slugifyTitle String //slugify title string
+  brandEmail   String
+  createdAt    DateTime @default(now()) //newsletter creation date when it came in the mailbox
+  content      String
 
   brand   Brand  @relation(fields: [brandId], references: [id])
   brandId String @db.ObjectId
@@ -62,7 +63,7 @@ model Listing {
 }
 
 model Brand {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   siteURL     String
   bannerImage String

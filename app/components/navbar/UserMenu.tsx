@@ -12,7 +12,9 @@ import { SafeUser } from "@/app/types";
 
 import MenuItem from "./MenuItem";
 import Avatar from "../Avatar";
+import dotenv from 'dotenv';
 
+require('dotenv').config()
 interface UserMenuProps {
   currentUser?: SafeUser | null
 }
@@ -63,7 +65,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
 
   return ( 
     <div className="relative" ref={menuRef}>
-      <div className="flex flex-row items-center gap-3">
+      <div className="flex-row items-center gap-3">
         <div 
         onClick={toggleOpen}
         className="
@@ -113,16 +115,6 @@ const UserMenu: React.FC<UserMenuProps> = ({
                   label="About Us" 
                   onClick={() => router.push('/aboutus')}
                 />
-                {currentUser.email === email?(
-                <MenuItem 
-                  label="My categories" 
-                  onClick={() => router.push('/categories')}
-                />):(<></>)}
-                {currentUser.email === email?(
-                <MenuItem 
-                  label="My brands" 
-                  onClick={() => router.push('/brands')}
-                />):(<></>)}
                 <hr />
                 <MenuItem 
                   label="Logout" 

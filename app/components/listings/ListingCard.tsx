@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
-import htmlToImage, { toPng } from 'html-to-image';
 
 
 import useCountries from "@/app/hooks/useCountries";
@@ -78,7 +77,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
 
   return (
     <div 
-      onClick={() => router.push(`/listings/${data.id}`)} 
+      onClick={() => router.push(`/listings/${data.slugifyTitle}-${data.id}`)} 
       className="col-span-1 cursor-pointer group"
     >
       <div className="flex flex-col gap-2 w-full">
@@ -100,7 +99,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                 group-hover:scale-110 
                 transition
               "
-              src={`https://urklist.s3.us-east-005.backblazeb2.com/${data.id}.png`}
+              src={`https://urklist.s3.us-east-005.backblazeb2.com/${data.slugifyTitle}-${data.id}.png`}
               alt="Listing"
             />
           <div className="

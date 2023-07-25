@@ -165,12 +165,12 @@ const Modal: React.FC<ModalProps> = ({
                     w-full
                   "
                 >
-                {title === 'Login'?(
+                {title === 'Register'?(<></>):(
                   <Button 
                     disabled={disabled} 
                     label={actionLabel} 
                     onClick={handleSubmit}
-                  />):(<></>)}
+                  />)}
                 </div>
                 {footer}
               </div>
