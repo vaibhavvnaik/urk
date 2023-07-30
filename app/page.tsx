@@ -31,12 +31,12 @@ const Home = async ({ searchParams }: HomeProps) => {
           className="
             pt-16
             grid 
-            grid-cols-1 
-            sm:grid-cols-2 
-            md:grid-cols-3 
-            lg:grid-cols-4
-            xl:grid-cols-5
-            2xl:grid-cols-6
+            grid-cols-3 
+            sm:grid-cols-4 
+            md:grid-cols-5 
+            lg:grid-cols-6
+            xl:grid-cols-7
+            2xl:grid-cols-8
             gap-8
           "
         >

@@ -65,10 +65,10 @@ model Listing {
 model Brand {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
   name        String
-  siteURL     String
-  bannerImage String
+  siteURL     String?
+  bannerImage String?
   description String?
-  logo        String
+  logo        String?
   email       String
   region      String?
 

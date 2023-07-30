@@ -12,7 +12,7 @@ import ToasterProvider from '@/app/providers/ToasterProvider';
 import './globals.css'
 import ClientOnly from './components/ClientOnly';
 import getCurrentUser from './actions/getCurrentUser';
-
+import Head from 'next/head';
 export const metadata = {
   title: 'Urklist.com',
   description: 'Find the deals and get inspired from newsletter',
@@ -31,6 +31,19 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <Head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-SKQ1RWGEL8"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-SKQ1RWGEL8');
+            `,
+          }}
+        />
+      </Head>
       <body className={font.className}>
         <ClientOnly>
           <ToasterProvider />
@@ -40,7 +53,6 @@ export default async function RootLayout({
           <RentModal />
           <Navbar currentUser={currentUser} />
         </ClientOnly>
-        <Analytics />
         <div className="pb-20 pt-28">
           {children}
         </div>
