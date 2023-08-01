@@ -100,7 +100,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                 transition
               "
               src={`https://urklist.s3.us-east-005.backblazeb2.com/${data.slugifyTitle}-${data.id}.png`}
-              alt="Listing"
+              alt={data.title}
             />
           <div className="
             absolute

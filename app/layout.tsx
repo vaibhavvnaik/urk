@@ -11,8 +11,10 @@ import ToasterProvider from '@/app/providers/ToasterProvider';
 
 import './globals.css'
 import ClientOnly from './components/ClientOnly';
+
 import getCurrentUser from './actions/getCurrentUser';
 import Head from 'next/head';
+
 export const metadata = {
   title: 'Urklist.com',
   description: 'Find the deals and get inspired from newsletter',

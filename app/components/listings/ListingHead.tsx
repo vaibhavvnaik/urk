@@ -29,10 +29,6 @@ const ListingHead: React.FC<ListingHeadProps> = ({
 }) => {
   return ( 
     <>
-      <Heading
-        title={title}
-        subtitle={createdAt}
-      />
       <div className="
           w-full
           h-[60vh]
@@ -43,16 +39,22 @@ const ListingHead: React.FC<ListingHeadProps> = ({
         <div
           className="
             absolute
-            top-5
+            top-1
             right-5
           "
         >
+          <div className="flex gap-16">
+            <Heading
+              title={title}
+              subtitle={createdAt}
+            />
+            <HeartButton 
+              listingId={id}
+              currentUser={currentUser}
+            />
+          </div>
           <div
             dangerouslySetInnerHTML={{ __html: content }}
-          />
-          <HeartButton 
-            listingId={id}
-            currentUser={currentUser}
           />
         </div>
       </div>
