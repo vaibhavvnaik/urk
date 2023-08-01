@@ -34,7 +34,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <Head>
-        <GoogleAnalytics/>
+        <GoogleAnalytics />
       </Head>
       <body className={font.className}>
         <ClientOnly>
