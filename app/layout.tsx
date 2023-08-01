@@ -11,7 +11,7 @@ import ToasterProvider from '@/app/providers/ToasterProvider';
 
 import './globals.css'
 import ClientOnly from './components/ClientOnly';
-
+import GoogleAnalytics from './components/GoogleAnalytics';
 import getCurrentUser from './actions/getCurrentUser';
 import Head from 'next/head';
 
@@ -34,17 +34,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <Head>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-SKQ1RWGEL8"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-SKQ1RWGEL8');
-            `,
-          }}
-        />
+        <GoogleAnalytics/>
       </Head>
       <body className={font.className}>
         <ClientOnly>
