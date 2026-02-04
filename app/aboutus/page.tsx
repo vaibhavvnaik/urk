@@ -1,53 +1,41 @@
-
-import EmptyState from "@/app/components/EmptyState";
-import ClientOnly from "@/app/components/ClientOnly";
-
-import getCurrentUser from "@/app/actions/getCurrentUser";
-import getFavoriteListings from "@/app/actions/getFavoriteListings";
-
 import Container from "../components/Container";
 
-const AboutUsPage = async () => {
-    return ( 
-      <div className="fixed w-full bg-white z-10 shadow-sm">
-        <div
-          className="
-            py-2
-            border-b-[1px]
-          "
-        >
+const AboutUsPage = () => {
+  return (
+    <div className="fixed w-full bg-white z-10 shadow-sm">
+      <div className="py-2 border-b-[1px]">
         <Container>
-          <div 
+          <div
             className="
-              flex 
-              flex-row 
-              items-center 
+              flex
+              flex-row
+              items-center
               justify-between
               gap-3
               md:gap-0
             "
           >
             <div>
-            <a href="/terms.html">Terms</a>
+              <a href="/terms.html">Terms</a>
             </div>
             <div>
-            <a href="/privacy.html">Privacy Policy</a>
+              <a href="/privacy.html">Privacy Policy</a>
             </div>
             <div>
-            <a href="/privacy">Cookies</a>
+              <a href="/privacy">Cookies</a>
             </div>
             <div>
-            <a href="/privacy">Disclaimer</a>
+              <a href="/privacy">Disclaimer</a>
             </div>
             <div>
-            <a href="/privacy">Contact Us</a>
+              <a href="/privacy">Contact Us</a>
             </div>
           </div>
         </Container>
       </div>
       <hr />
     </div>
-    );
-  }
-  
+  );
+};
+
 export default AboutUsPage;

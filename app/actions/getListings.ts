@@ -15,12 +15,6 @@ export default async function getListings(
       endDate
     } = params;
 
-    let query: any = {};
-
-    if (category){
-      query.name = category;
-    }
-
     const listings = await prisma.listing.findMany({
       include: {
         brand: {
@@ -48,7 +42,10 @@ export default async function getListings(
     }));
 
     return safeListings;
-  } catch (error: any) {
-    throw new Error(error);
+  } catch (error) {
+    if (error instanceof Error) {
+      throw error;
+    }
+    throw new Error("Failed to fetch listings.");
   }
 }

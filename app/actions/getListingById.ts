@@ -40,7 +40,10 @@ export default async function getListingById(
           listing.user.emailVerified?.toString() || null,
       }
     };
-  } catch (error: any) {
-    throw new Error(error);
+  } catch (error) {
+    if (error instanceof Error) {
+      throw error;
+    }
+    throw new Error("Failed to fetch listing.");
   }
 }

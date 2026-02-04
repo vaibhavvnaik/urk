@@ -15,7 +15,10 @@ import prisma from "@/app/libs/prismadb";
       return null;
     }
      return brand;
-  } catch (error: any) {
-    throw new Error(error);
+  } catch (error) {
+    if (error instanceof Error) {
+      throw error;
+    }
+    throw new Error("Failed to fetch brand.");
   }
 }

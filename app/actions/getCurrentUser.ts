@@ -32,7 +32,7 @@ export default async function getCurrentUser() {
       emailVerified: 
         currentUser.emailVerified?.toISOString() || null,
     };
-  } catch (error: any) {
+  } catch (error) {
     return null;
   }
 }

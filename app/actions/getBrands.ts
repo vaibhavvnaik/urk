@@ -17,7 +17,10 @@ export default async function getBrands() {
     }));
 
     return safeBrands;
-  } catch (error: any) {
-    throw new Error(error);
+  } catch (error) {
+    if (error instanceof Error) {
+      throw error;
+    }
+    throw new Error("Failed to fetch brands.");
   }
 }

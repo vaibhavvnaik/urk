@@ -18,7 +18,10 @@ export default async function getCategories() {
     }));
 
     return safeCategories;
-  } catch (error: any) {
-    throw new Error(error);
+  } catch (error) {
+    if (error instanceof Error) {
+      throw error;
+    }
+    throw new Error("Failed to fetch categories.");
   }
 }
