@@ -99,7 +99,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                 group-hover:scale-110 
                 transition
               "
-              src={`https://urklist.s3.us-east-005.backblazeb2.com/${data.slugifyTitle}-${data.id}.png`}
+              src={`${process.env.NEXT_PUBLIC_BACKBLAZE_BUCKET_URL}/${data.slugifyTitle}-${data.id}.png`}
               alt={data.title}
             />
           <div className="
