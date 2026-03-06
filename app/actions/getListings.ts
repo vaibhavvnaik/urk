@@ -24,6 +24,7 @@ export default async function getListings(
         },
       },
       where: {
+        slugifyTitle: { not: null },
         brand: {
           category: {
             name: category,
