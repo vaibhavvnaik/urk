@@ -51,6 +51,8 @@ model Listing {
   slugifyTitle String? //slugify title string (optional for legacy docs without this field)
   brandEmail   String
   createdAt    DateTime @default(now()) //newsletter creation date when it came in the mailbox
+  receivedAt   DateTime? //email received timestamp from Gmail internalDate (for display)
+  messageId    String?   //Gmail message ID for deduplication
   content      String
 
   brand   Brand  @relation(fields: [brandId], references: [id])
