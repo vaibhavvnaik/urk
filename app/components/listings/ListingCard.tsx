@@ -95,7 +95,7 @@ return (
           {data.title}
         </div>
         <div className="font-light text-neutral-500 text-sm">
-          {new Date(data.createdAt).toLocaleString('en-US', {
+          {new Date(data.receivedAt ?? data.createdAt).toLocaleString('en-US', {
             month: 'long',
             day: 'numeric',
             hour: 'numeric',
