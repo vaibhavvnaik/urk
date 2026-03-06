@@ -43,25 +43,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   const { getByValue } = useCountries();
 
   const [previewImage, setPreviewImage] = useState<string>('');
-
-  const addClassNameToFirstElement = (htmlContent:any, className:string) => {
-    console.log("Inside Add ClassName:", className);
-    const tempElement = document.createElement('div');
-    tempElement.innerHTML = htmlContent;
-  
-    // Get the first child node
-    const firstChild = tempElement.firstChild;
-  
-    // Check if the first child is an element node
-    if (firstChild instanceof Element) {
-      // Add the classname to the first element
-      firstChild.classList.add(className);
-    }
-  
-    return tempElement.innerHTML;
-  };
-
-  const handleCancel = useCallback(
+const handleCancel = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
@@ -71,11 +53,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
 
     onAction?.(actionId)
   }, [disabled, onAction, actionId]);
-
-  const updatedHtmlContent = addClassNameToFirstElement(data.content, 'my-class');
-  console.log("UpdatedHTML", updatedHtmlContent);
-
-  return (
+return (
     <div 
       onClick={() => router.push(`/listings/${data.slugifyTitle}-${data.id}`)} 
       className="col-span-1 cursor-pointer group"
