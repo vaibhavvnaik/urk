@@ -20,6 +20,8 @@ model User {
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
   favoriteIds    String[]  @db.ObjectId
+  // Phase 1: brand follows
+  followedBrandIds String[] @db.ObjectId
 
   accounts     Account[]
   listings     Listing[]
@@ -47,13 +49,18 @@ model Account {
 
 model Listing {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  title        String //subjectline string
-  slugifyTitle String? //slugify title string (optional for legacy docs without this field)
+  title        String   //subjectline string
+  slugifyTitle String?  //slugify title string (optional for legacy docs without this field)
   brandEmail   String
   createdAt    DateTime @default(now()) //newsletter creation date when it came in the mailbox
   receivedAt   DateTime? //email received timestamp from Gmail internalDate (for display)
-  messageId    String?   //Gmail message ID for deduplication
-  content      String
+  messageId    String?  //Gmail message ID for deduplication
+  content      String   // screenshot URL (Backblaze B2)
+
+  // Phase 1: new fields
+  htmlContent  String?  // full email HTML body for detail view
+  promoCodes   String[] // extracted promo codes e.g. ["SAVE20", "FREESHIP"]
+  discountText String?  // human-readable discount e.g. "40% off everything"
 
   brand   Brand  @relation(fields: [brandId], references: [id])
   brandId String @db.ObjectId
@@ -73,6 +80,8 @@ model Brand {
   logo        String?
   email       String
   region      String?
+  // Phase 1: new fields
+  slug        String? @unique // URL-friendly slug e.g. "j-crew"
 
   category    Category @relation(fields: [category_id], references: [id])
   category_id String   @db.ObjectId
@@ -81,21 +90,32 @@ model Brand {
 }
 
 model Category {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   description String
-  brand       Brand[]
+
+  brand Brand[]
 }
 
 model Reservation {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId     String   @db.ObjectId
-  listingId  String   @db.ObjectId
-  startDate  DateTime
-  endDate    DateTime
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  listingId String   @db.ObjectId
+  startDate DateTime
+  endDate   DateTime
   totalPrice Int
-  createdAt  DateTime @default(now())
+  createdAt DateTime @default(now())
 
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+}
+
+// Phase 1: track emails from brands not yet in DB
+model UnmatchedEmail {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  fromEmail  String
+  subject    String
+  receivedAt DateTime
+  messageId  String   @unique
+  createdAt  DateTime @default(now())
 }
