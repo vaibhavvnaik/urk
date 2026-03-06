@@ -55,7 +55,7 @@ const handleCancel = useCallback(
   }, [disabled, onAction, actionId]);
 return (
     <div 
-      onClick={() => router.push(`/listings/${data.slugifyTitle}-${data.id}`)} 
+      onClick={() => router.push(`/listings/${data.slugifyTitle!}-${data.id}`)} 
       className="col-span-1 cursor-pointer group"
     >
       <div className="flex flex-col gap-2 w-full">
@@ -77,7 +77,7 @@ return (
                 group-hover:scale-110 
                 transition
               "
-              src={`${process.env.NEXT_PUBLIC_BACKBLAZE_BUCKET_URL}/${data.slugifyTitle}-${data.id}.png`}
+              src={`${process.env.NEXT_PUBLIC_BACKBLAZE_BUCKET_URL}/${data.slugifyTitle!}-${data.id}.png`}
               alt={data.title}
             />
           <div className="
