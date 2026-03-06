@@ -48,7 +48,7 @@ model Account {
 model Listing {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   title        String //subjectline string
-  slugifyTitle String //slugify title string
+  slugifyTitle String? //slugify title string (optional for legacy docs without this field)
   brandEmail   String
   createdAt    DateTime @default(now()) //newsletter creation date when it came in the mailbox
   content      String
