@@ -10,7 +10,9 @@ export default async function getListingById(
   try {
     const { listingId } = params;
 
+    // Extract the actual MongoDB ObjectId from the slug format "some-title-6507a1b2c3d4e5f6a7b8c9d0"
     const extractListingId = listingId.substring(listingId.lastIndexOf("-") + 1);
+
     const listing = await prisma.listing.findUnique({
       where: {
         id: extractListingId,
@@ -32,12 +34,16 @@ export default async function getListingById(
     return {
       ...listing,
       createdAt: listing.createdAt.toString(),
+      receivedAt: listing.receivedAt?.toISOString() ?? null,
+      // Phase 1: include new fields
+      htmlContent: listing.htmlContent ?? null,
+      promoCodes: listing.promoCodes ?? [],
+      discountText: listing.discountText ?? null,
       user: {
         ...listing.user,
         createdAt: listing.user.createdAt.toString(),
         updatedAt: listing.user.updatedAt.toString(),
-        emailVerified: 
-          listing.user.emailVerified?.toString() || null,
+        emailVerified: listing.user.emailVerified?.toString() || null,
       }
     };
   } catch (error) {
