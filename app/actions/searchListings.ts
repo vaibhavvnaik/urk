@@ -1,5 +1,3 @@
-'use server';
-
 import prisma from "@/app/libs/prismadb";
 
 const PAGE_SIZE = 24;
