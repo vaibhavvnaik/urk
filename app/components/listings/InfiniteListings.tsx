@@ -1,11 +1,20 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import getListings, { IListingsParams } from '@/app/actions/getListings';
 import { SafeListing, SafeUser } from '@/app/types';
 import ListingCard from './ListingCard';
+import qs from 'query-string';
 
 const PAGE_SIZE = 24;
+
+interface IListingsParams {
+  category?: string;
+  startDate?: string;
+  endDate?: string;
+  page?: number;
+  query?: string;
+  brandSlug?: string;
+}
 
 interface InfiniteListingsProps {
   initialListings: SafeListing[];
@@ -27,19 +36,38 @@ const InfiniteListings: React.FC<InfiniteListingsProps> = ({
   const loadMore = useCallback(async () => {
     if (loading || !hasMore) return;
     setLoading(true);
+
     const nextPage = page + 1;
-    const newListings = await getListings({ ...searchParams, page: nextPage });
-    if (newListings.length < PAGE_SIZE) {
+    const queryString = qs.stringify(
+      { ...searchParams, page: nextPage },
+      { skipNull: true, skipEmptyString: true }
+    );
+
+    try {
+      const res = await fetch(`/api/listings?${queryString}`);
+      const newListings = await res.json();
+
+      if (!Array.isArray(newListings) || newListings.length < PAGE_SIZE) {
+        setHasMore(false);
+      }
+
+      if (Array.isArray(newListings)) {
+        setListings((prev) => [...prev, ...newListings]);
+      }
+
+      setPage(nextPage);
+    } catch (error) {
+      console.error('Failed to load more listings:', error);
       setHasMore(false);
     }
-    setListings((prev) => [...prev, ...newListings]);
-    setPage(nextPage);
+
     setLoading(false);
   }, [loading, hasMore, page, searchParams]);
 
   useEffect(() => {
     const sentinel = sentinelRef.current;
     if (!sentinel) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
