@@ -1,11 +1,18 @@
 import Container from "@/app/components/Container";
 import EmptyState from "@/app/components/EmptyState";
 import ClientOnly from "./components/ClientOnly";
-import getListings, {
-  IListingsParams
-} from "@/app/actions/getListings";
+import getListings from "@/app/actions/getListings";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import InfiniteListings from "@/app/components/listings/InfiniteListings";
+
+export interface IListingsParams {
+  category?: string;
+  startDate?: string;
+  endDate?: string;
+  page?: number;
+  query?: string;
+  brandSlug?: string;
+}
 
 interface HomeProps {
   searchParams: IListingsParams
