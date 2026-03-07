@@ -17,11 +17,14 @@ export type SafeCategory = Category;
 export type SafeBrand = Brand;
 
 // Phase 1: brand with listing count and category
+// Phase 2: added email frequency stats
 export type SafeBrandWithDetails = SafeBrand & {
   category: SafeCategory;
   _count?: {
     listing: number;
   };
+  firstEmailDate?: string | null;
+  latestEmailDate?: string | null;
 };
 
 export type SafeReservation = Omit<
