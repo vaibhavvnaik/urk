@@ -1,5 +1,3 @@
-'use server';
-
 import prisma from "@/app/libs/prismadb";
 
 const PAGE_SIZE = 24;
@@ -30,18 +28,14 @@ export default async function getListings(
 
     // Build the where clause dynamically
     const where: any = {
-      slugifyTitle: {
-        not: null,
-      },
+      slugifyTitle: { not: null },
     };
 
     // Category filter
     if (category) {
       where.brand = {
         ...where.brand,
-        category: {
-          name: category,
-        },
+        category: { name: category },
       };
     }
 
@@ -61,7 +55,6 @@ export default async function getListings(
     }
 
     // Phase 1: Full-text search on title
-    // Uses MongoDB regex for now — upgrade to Atlas Search index for production scale
     if (query && query.trim().length > 0) {
       where.title = {
         contains: query.trim(),
