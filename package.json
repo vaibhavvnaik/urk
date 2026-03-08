@@ -33,6 +33,7 @@
     "leaflet": "^1.9.3",
     "lucide-react": "^0.263.1",
     "moment": "^2.29.4",
+    "mongodb": "^7.1.0",
     "next": "13.2.4",
     "next-auth": "^4.22.1",
     "next-cloudinary": "^4.0.1",
