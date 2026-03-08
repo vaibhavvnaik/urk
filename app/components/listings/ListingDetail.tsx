@@ -40,8 +40,47 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [iframeHeight, setIframeHeight] = useState(800);
 
+  const isLikelyInlineHtml = (value?: string | null) => {
+    if (!value) return false;
+    const trimmed = value.trim();
+    const lowered = trimmed.toLowerCase();
+    return (
+      lowered.startsWith("<!doctype html") ||
+      lowered.startsWith("<html") ||
+      lowered.startsWith("<body") ||
+      lowered.includes("<table") ||
+      lowered.includes("<a ")
+    );
+  };
+
+  const isLikelyImageUrl = (value?: string | null) => {
+    if (!value) return false;
+    const trimmed = value.trim().toLowerCase();
+    return (
+      trimmed.startsWith("data:image/") ||
+      /\.(png|jpe?g|gif|webp|svg)(\?|$)/.test(trimmed)
+    );
+  };
+
+  const withBaseTargetBlank = (html: string) => {
+    const baseTag = '<base target="_blank" rel="noopener noreferrer">';
+    if (/<base\s/i.test(html)) return html;
+    if (/<head[^>]*>/i.test(html)) {
+      return html.replace(/<head([^>]*)>/i, `<head$1>${baseTag}`);
+    }
+    return `${baseTag}${html}`;
+  };
+
+  const inlineHtmlSource = (listing.htmlContent && isLikelyInlineHtml(listing.htmlContent))
+    ? listing.htmlContent
+    : (isLikelyInlineHtml(listing.content) ? listing.content : null);
+
+  const remoteHtmlUrl = !inlineHtmlSource && listing.content && !isLikelyImageUrl(listing.content)
+    ? listing.content
+    : null;
+
   useEffect(() => {
-    if (!listing.htmlContent || !iframeRef.current) return;
+    if (!inlineHtmlSource || !iframeRef.current) return;
 
     const iframe = iframeRef.current;
     const handleLoad = () => {
@@ -57,7 +96,7 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
 
     iframe.addEventListener('load', handleLoad);
     return () => iframe.removeEventListener('load', handleLoad);
-  }, [listing.htmlContent]);
+  }, [inlineHtmlSource]);
 
   const displayDate = new Date(listing.receivedAt ?? listing.createdAt).toLocaleString('en-US', {
     weekday: 'long',
@@ -129,13 +168,22 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
 
       {/* Email content */}
       <div className="border rounded-xl overflow-hidden bg-white">
-        {listing.htmlContent ? (
+        {inlineHtmlSource ? (
           <iframe
             ref={iframeRef}
-            srcDoc={listing.htmlContent}
+            srcDoc={withBaseTargetBlank(inlineHtmlSource)}
             className="w-full border-none"
             style={{ height: `${iframeHeight}px` }}
-            sandbox="allow-same-origin"
+            sandbox="allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation"
+            title={`Email: ${listing.title}`}
+          />
+        ) : remoteHtmlUrl ? (
+          <iframe
+            ref={iframeRef}
+            src={remoteHtmlUrl}
+            className="w-full border-none"
+            style={{ height: `${iframeHeight}px` }}
+            sandbox="allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation"
             title={`Email: ${listing.title}`}
           />
         ) : (
